@@ -213,7 +213,7 @@
 
   <div class="eyebrow">Agenda de jovens · 2026</div>
   <h1>Toque no seu grupo<br>e <em>leve a agenda</em> pronta.</h1>
-  <p class="lede">Cada botão baixa o calendário daquele grupo. Abre direto no Google Agenda, no Apple Calendário ou em qualquer outro app que leia arquivo .ics, sem digitar uma data.</p>
+  <p class="lede">Cada botão adiciona o calendário daquele grupo. No iPhone abre direto a tela de "Adicionar à Agenda". No Android, o arquivo baixa e é só tocar nele para abrir no app de calendário.</p>
 
   <section class="group-section">
     <div class="grid wide">
@@ -292,9 +292,25 @@ function buildICS(id, events){
   return lines.join("\r\n");
 }
 
+function isIOS(){
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+}
+
 function download(filename, content){
   const blob = new Blob([content], {type:"text/calendar;charset=utf-8"});
   const url = URL.createObjectURL(blob);
+
+  if(isIOS()){
+    // iOS Safari: opening (not downloading) an .ics blob triggers the
+    // native "Adicionar à Agenda" sheet directly, no file download step.
+    window.location.href = url;
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+    return;
+  }
+
+  // Android / desktop: browsers block auto-opening the calendar app, so
+  // the file downloads and the person taps it once to add the events.
   const a = document.createElement("a");
   a.href = url; a.download = filename;
   document.body.appendChild(a); a.click();
