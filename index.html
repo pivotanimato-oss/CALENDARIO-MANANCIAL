@@ -193,17 +193,6 @@
   button.add:focus-visible{outline:2px solid var(--paper); outline-offset:2px;}
   button.add.done{background:transparent; color:var(--gold-soft); border:1px solid var(--gold-soft);}
 
-  .featured{
-    grid-column:1/-1;
-  }
-  .featured .ticket{
-    background:linear-gradient(135deg, var(--ink-3), var(--ink-2));
-    padding:32px 32px 26px;
-  }
-  .featured h3{font-size:28px;}
-  .featured .bottom{align-items:flex-end;}
-  .featured .count{font-size:40px;}
-
   @media (prefers-reduced-motion: reduce){
     .ticket, button.add{transition:none;}
   }
@@ -217,17 +206,16 @@
   <p class="lede">Escolha "Calendário nativo" para abrir no app de agenda do seu aparelho (iPhone, Android, PC/Mac) ou "Google Agenda" para inscrever direto na sua conta Google — as duas trazem todas as datas do grupo de uma vez.</p>
 
   <section class="group-section">
-    <div class="grid wide">
-      <div class="featured">
-        <div class="ticket" id="card-profive"></div>
-      </div>
+    <div class="section-head">
+      <h2>Agenda geral</h2>
+      <span>igreja toda</span>
     </div>
+    <div class="grid wide" id="grid-outros"></div>
   </section>
 
   <section class="group-section">
     <div class="section-head">
-      <h2>Por cargo</h2>
-      <span>convocações</span>
+      <h2>Convocações</h2>
     </div>
     <div class="grid" id="grid-cargo"></div>
   </section>
@@ -238,14 +226,6 @@
       <span>programação própria</span>
     </div>
     <div class="grid" id="grid-ministerio"></div>
-  </section>
-
-  <section class="group-section">
-    <div class="section-head">
-      <h2>Outros</h2>
-      <span>agenda geral da igreja</span>
-    </div>
-    <div class="grid wide" id="grid-outros"></div>
   </section>
 
 
@@ -414,28 +394,25 @@ function ticketMarkup({title, kicker, desc, count, id}){
   `;
 }
 
-// Featured ProFive card
-document.getElementById("card-profive").innerHTML = ticketMarkup({
-  title: DATA.profive.title,
-  kicker: DATA.profive.kicker,
-  desc: DATA.profive.desc,
-  count: DATA.profive.events.length,
-  id: "profive"
-});
-
 function renderGrid(containerId, items){
   const el = document.getElementById(containerId);
   el.innerHTML = items.map(item => `<div class="ticket">${ticketMarkup({
-    title:item.title, desc:item.desc, count:item.events.length, id:item.id
+    title:item.title, kicker:item.kicker, desc:item.desc, count:item.events.length, id:item.id
   })}</div>`).join("");
 }
 
+const ministerioItems = [
+  { id:"profive", title:DATA.profive.title, kicker:DATA.profive.kicker, desc:DATA.profive.desc, events:DATA.profive.events },
+  ...DATA.ministerio
+];
+
 renderGrid("grid-cargo", DATA.cargo);
-renderGrid("grid-ministerio", DATA.ministerio);
+renderGrid("grid-ministerio", ministerioItems);
 
 document.getElementById("grid-outros").innerHTML = `<div class="ticket">${ticketMarkup({
   title:DATA.outros.title, desc:DATA.outros.desc, count:DATA.outros.events.length, id:"outros"
 })}</div>`;
+
 
 document.addEventListener("click", (e) => {
   const btn = e.target.closest("button.add");
