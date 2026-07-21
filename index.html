@@ -158,7 +158,8 @@
   .perf::before{left:-9px;}
   .perf::after{right:-9px;}
 
-  .bottom{display:flex; align-items:center; justify-content:space-between; gap:12px;}
+  .bottom{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+  .add-group{display:flex; gap:8px; flex-wrap:wrap;}
   .count{
     font-family:'IBM Plex Mono',monospace;
     font-size:26px;
@@ -177,12 +178,12 @@
   button.add{
     font-family:'Inter',sans-serif;
     font-weight:600;
-    font-size:13.5px;
+    font-size:12.5px;
     color:var(--ink);
     background:var(--gold-soft);
     border:none;
     border-radius:999px;
-    padding:11px 18px;
+    padding:10px 14px;
     cursor:pointer;
     transition:background .15s ease, transform .1s ease;
     white-space:nowrap;
@@ -213,7 +214,7 @@
 
   <div class="eyebrow">Agenda de jovens · 2026</div>
   <h1>Toque no seu grupo<br>e <em>leve a agenda</em> pronta.</h1>
-  <p class="lede">Cada botão adiciona o calendário daquele grupo. No iPhone abre direto a tela de "Adicionar à Agenda". No Android, o arquivo baixa e é só tocar nele para abrir no app de calendário.</p>
+  <p class="lede">Escolha "Calendário nativo" para abrir no app de agenda do seu aparelho (iPhone, Android, PC/Mac) ou "Google Agenda" para inscrever direto na sua conta Google — as duas trazem todas as datas do grupo de uma vez.</p>
 
   <section class="group-section">
     <div class="grid wide">
@@ -251,71 +252,41 @@
 </div>
 
 <script>
-const TZ_BLOCK = [
-"BEGIN:VTIMEZONE",
-"TZID:Europe/Lisbon",
-"X-LIC-LOCATION:Europe/Lisbon",
-"BEGIN:DAYLIGHT",
-"TZOFFSETFROM:+0000",
-"TZOFFSETTO:+0100",
-"TZNAME:WEST",
-"DTSTART:19700329T010000",
-"RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=3",
-"END:DAYLIGHT",
-"BEGIN:STANDARD",
-"TZOFFSETFROM:+0100",
-"TZOFFSETTO:+0000",
-"TZNAME:WET",
-"DTSTART:19701025T020000",
-"RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=10",
-"END:STANDARD",
-"END:VTIMEZONE"
-].join("\r\n");
-
-function buildICS(id, events){
-  let lines = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//ProFive//Agenda//PT","CALSCALE:GREGORIAN","METHOD:PUBLISH", TZ_BLOCK];
-  events.forEach((ev, i) => {
-    lines.push("BEGIN:VEVENT");
-    lines.push("UID:" + id + "-" + i + "-" + ev.start + "@profive-jovens");
-    lines.push("DTSTAMP:20260720T120000Z");
-    if(ev.timed){
-      lines.push("DTSTART;TZID=Europe/Lisbon:" + ev.start + "T190000");
-      lines.push("DTEND;TZID=Europe/Lisbon:" + ev.start + "T210000");
-    } else {
-      lines.push("DTSTART;VALUE=DATE:" + ev.start);
-      lines.push("DTEND;VALUE=DATE:" + (ev.end || ev.start));
-    }
-    lines.push("SUMMARY:" + ev.title);
-    lines.push("END:VEVENT");
-  });
-  lines.push("END:VCALENDAR");
-  return lines.join("\r\n");
-}
+// Each group has a static .ics file hosted alongside this page (see /calendars).
+// "Calendário nativo": opens/downloads that file so the device's own calendar
+// app (Apple Calendar, Outlook, Windows Calendar...) picks it up.
+// "Google Agenda": subscribes Google Calendar directly to that same file via
+// the render?cid= trick, so every date lands in Google Calendar in one click.
 
 function isIOS(){
   return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
     (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 }
 
-function download(filename, content){
-  const blob = new Blob([content], {type:"text/calendar;charset=utf-8"});
-  const url = URL.createObjectURL(blob);
+function icsUrl(id){
+  return new URL("calendars/" + id + ".ics", location.href).href;
+}
 
+function openNative(id){
+  const url = icsUrl(id);
   if(isIOS()){
-    // iOS Safari: opening (not downloading) an .ics blob triggers the
-    // native "Adicionar à Agenda" sheet directly, no file download step.
+    // iOS Safari: opening (not downloading) the .ics triggers the native
+    // "Adicionar à Agenda" sheet directly, no file download step.
     window.location.href = url;
-    setTimeout(() => URL.revokeObjectURL(url), 4000);
     return;
   }
-
   // Android / desktop: browsers block auto-opening the calendar app, so
   // the file downloads and the person taps it once to add the events.
   const a = document.createElement("a");
-  a.href = url; a.download = filename;
+  a.href = url; a.download = id + ".ics";
   document.body.appendChild(a); a.click();
   document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+}
+
+function openGoogle(id){
+  const cid = icsUrl(id).replace(/^https:/, "webcal:");
+  const url = "https://calendar.google.com/calendar/render?cid=" + encodeURIComponent(cid);
+  window.open(url, "_blank", "noopener");
 }
 
 const DATA = {
@@ -435,7 +406,10 @@ function ticketMarkup({title, kicker, desc, count, id}){
     <div class="perf"></div>
     <div class="bottom">
       <div class="count">${count}<small>${count == 1 ? "data" : "datas"}</small></div>
-      <button class="add" data-id="${id}">Adicionar à agenda</button>
+      <div class="add-group">
+        <button class="add" data-id="${id}" data-action="native">Calendário nativo</button>
+        <button class="add" data-id="${id}" data-action="google">Google Agenda</button>
+      </div>
     </div>
   `;
 }
@@ -463,23 +437,16 @@ document.getElementById("grid-outros").innerHTML = `<div class="ticket">${ticket
   title:DATA.outros.title, desc:DATA.outros.desc, count:DATA.outros.events.length, id:"outros"
 })}</div>`;
 
-function findEvents(id){
-  if(id === "profive") return DATA.profive.events;
-  if(id === "outros") return DATA.outros.events;
-  const inCargo = DATA.cargo.find(g => g.id === id);
-  if(inCargo) return inCargo.events;
-  const inMin = DATA.ministerio.find(g => g.id === id);
-  if(inMin) return inMin.events;
-  return [];
-}
-
 document.addEventListener("click", (e) => {
   const btn = e.target.closest("button.add");
   if(!btn) return;
   const id = btn.dataset.id;
-  const events = findEvents(id);
-  const ics = buildICS(id, events);
-  download(id + ".ics", ics);
+  const action = btn.dataset.action;
+  if(action === "google"){
+    openGoogle(id);
+  } else {
+    openNative(id);
+  }
   const original = btn.textContent;
   btn.textContent = "Adicionado ✓";
   btn.classList.add("done");
