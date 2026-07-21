@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agenda ProFive 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0F231D;
+    --ink-2:#173229;
+    --ink-3:#1E3D31;
+    --gold:#C9A227;
+    --gold-soft:#E4C766;
+    --paper:#F3EFE3;
+    --paper-dim:#B9C2B7;
+    --line: rgba(243,239,227,0.16);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 12% -10%, rgba(201,162,39,0.10), transparent 60%),
+      var(--ink);
+    color:var(--paper);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding: 64px 24px 96px;
+  }
+  .wrap{max-width:1040px;margin:0 auto;}
+
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold-soft);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:26px;height:1px;
+    background:var(--gold-soft);
+    display:inline-block;
+  }
+
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:clamp(32px,5vw,52px);
+    line-height:1.08;
+    letter-spacing:-0.01em;
+    margin:0 0 18px;
+    max-width:16ch;
+  }
+  h1 em{
+    font-style:italic;
+    color:var(--gold-soft);
+    font-weight:400;
+  }
+  .lede{
+    font-size:16.5px;
+    line-height:1.6;
+    color:var(--paper-dim);
+    max-width:52ch;
+    margin:0 0 56px;
+  }
+
+  section.group-section{margin-top:64px;}
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    border-bottom:1px solid var(--line);
+    padding-bottom:14px;
+    margin-bottom:28px;
+  }
+  .section-head h2{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:22px;
+    margin:0;
+  }
+  .section-head span{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--paper-dim);
+    letter-spacing:0.05em;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(230px,1fr));
+    gap:22px;
+  }
+  .grid.wide{grid-template-columns:1fr;}
+
+  .ticket{
+    position:relative;
+    background:var(--ink-2);
+    border-radius:14px;
+    padding:26px 24px 22px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    overflow:hidden;
+    box-shadow:
+      0 1px 2px rgba(0,0,0,0.20),
+      0 10px 28px rgba(0,0,0,0.32);
+    transition:box-shadow .2s ease, transform .2s ease;
+  }
+  .ticket:hover{
+    box-shadow:
+      0 2px 4px rgba(0,0,0,0.24),
+      0 18px 40px rgba(0,0,0,0.40);
+    transform:translateY(-2px);
+  }
+
+  .ticket .top{display:flex; flex-direction:column; gap:8px;}
+  .ticket .kicker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--gold-soft);
+  }
+  .ticket h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:21px;
+    margin:0;
+    line-height:1.2;
+  }
+  .ticket .desc{
+    font-size:13.5px;
+    color:var(--paper-dim);
+    line-height:1.5;
+  }
+
+  .perf{
+    position:relative;
+    height:1px;
+    margin:0 -24px;
+    border-top:2px dashed rgba(243,239,227,0.22);
+  }
+  .perf::before, .perf::after{
+    content:"";
+    position:absolute;
+    top:-9px;
+    width:18px;height:18px;
+    border-radius:50%;
+    background:var(--ink);
+  }
+  .perf::before{left:-9px;}
+  .perf::after{right:-9px;}
+
+  .bottom{display:flex; align-items:center; justify-content:space-between; gap:12px;}
+  .count{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:26px;
+    color:var(--gold-soft);
+    line-height:1;
+  }
+  .count small{
+    display:block;
+    font-family:'Inter',sans-serif;
+    font-size:10.5px;
+    color:var(--paper-dim);
+    letter-spacing:0.04em;
+    margin-top:4px;
+  }
+
+  button.add{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:13.5px;
+    color:var(--ink);
+    background:var(--gold-soft);
+    border:none;
+    border-radius:999px;
+    padding:11px 18px;
+    cursor:pointer;
+    transition:background .15s ease, transform .1s ease;
+    white-space:nowrap;
+  }
+  button.add:hover{background:var(--gold);}
+  button.add:active{transform:scale(0.97);}
+  button.add:focus-visible{outline:2px solid var(--paper); outline-offset:2px;}
+  button.add.done{background:transparent; color:var(--gold-soft); border:1px solid var(--gold-soft);}
+
+  .featured{
+    grid-column:1/-1;
+  }
+  .featured .ticket{
+    background:linear-gradient(135deg, var(--ink-3), var(--ink-2));
+    padding:32px 32px 26px;
+  }
+  .featured h3{font-size:28px;}
+  .featured .bottom{align-items:flex-end;}
+  .featured .count{font-size:40px;}
+
+  @media (prefers-reduced-motion: reduce){
+    .ticket, button.add{transition:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">Agenda de jovens · 2026</div>
+  <h1>Toque no seu grupo<br>e <em>leve a agenda</em> pronta.</h1>
+  <p class="lede">Cada botão baixa o calendário daquele grupo. Abre direto no Google Agenda, no Apple Calendário ou em qualquer outro app que leia arquivo .ics, sem digitar uma data.</p>
+
+  <section class="group-section">
+    <div class="grid wide">
+      <div class="featured">
+        <div class="ticket" id="card-profive"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="group-section">
+    <div class="section-head">
+      <h2>Por cargo</h2>
+      <span>convocações</span>
+    </div>
+    <div class="grid" id="grid-cargo"></div>
+  </section>
+
+  <section class="group-section">
+    <div class="section-head">
+      <h2>Por ministério</h2>
+      <span>programação própria</span>
+    </div>
+    <div class="grid" id="grid-ministerio"></div>
+  </section>
+
+  <section class="group-section">
+    <div class="section-head">
+      <h2>Outros</h2>
+      <span>agenda geral da igreja</span>
+    </div>
+    <div class="grid wide" id="grid-outros"></div>
+  </section>
+
+
+</div>
+
+<script>
+const TZ_BLOCK = [
+"BEGIN:VTIMEZONE",
+"TZID:Europe/Lisbon",
+"X-LIC-LOCATION:Europe/Lisbon",
+"BEGIN:DAYLIGHT",
+"TZOFFSETFROM:+0000",
+"TZOFFSETTO:+0100",
+"TZNAME:WEST",
+"DTSTART:19700329T010000",
+"RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=3",
+"END:DAYLIGHT",
+"BEGIN:STANDARD",
+"TZOFFSETFROM:+0100",
+"TZOFFSETTO:+0000",
+"TZNAME:WET",
+"DTSTART:19701025T020000",
+"RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=10",
+"END:STANDARD",
+"END:VTIMEZONE"
+].join("\r\n");
+
+function buildICS(id, events){
+  let lines = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//ProFive//Agenda//PT","CALSCALE:GREGORIAN","METHOD:PUBLISH", TZ_BLOCK];
+  events.forEach((ev, i) => {
+    lines.push("BEGIN:VEVENT");
+    lines.push("UID:" + id + "-" + i + "-" + ev.start + "@profive-jovens");
+    lines.push("DTSTAMP:20260720T120000Z");
+    if(ev.timed){
+      lines.push("DTSTART;TZID=Europe/Lisbon:" + ev.start + "T190000");
+      lines.push("DTEND;TZID=Europe/Lisbon:" + ev.start + "T210000");
+    } else {
+      lines.push("DTSTART;VALUE=DATE:" + ev.start);
+      lines.push("DTEND;VALUE=DATE:" + (ev.end || ev.start));
+    }
+    lines.push("SUMMARY:" + ev.title);
+    lines.push("END:VEVENT");
+  });
+  lines.push("END:VCALENDAR");
+  return lines.join("\r\n");
+}
+
+function download(filename, content){
+  const blob = new Blob([content], {type:"text/calendar;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+const DATA = {
+  profive: {
+    title:"ProFive", kicker:"reunião de jovens", desc:"De 15 em 15 dias, sexta às 19h (25/07 e 26/12 caem no sábado)",
+    events:[
+      {start:"20260725", title:"ProFive", timed:true},
+      {start:"20260814", title:"ProFive", timed:true},
+      {start:"20260828", title:"ProFive", timed:true},
+      {start:"20260911", title:"ProFive", timed:true},
+      {start:"20260925", title:"ProFive", timed:true},
+      {start:"20261009", title:"ProFive", timed:true},
+      {start:"20261023", title:"ProFive", timed:true},
+      {start:"20261106", title:"ProFive", timed:true},
+      {start:"20261120", title:"ProFive", timed:true},
+      {start:"20261204", title:"ProFive", timed:true},
+      {start:"20261218", title:"ProFive", timed:true},
+      {start:"20261226", title:"ProFive | Encerramento do Ano", timed:true},
+    ]
+  },
+  cargo: [
+    { id:"cargo-aspirantes", title:"Aspirantes", desc:"Coord. Mari", events:[
+      {start:"20260707", title:"Convocação Aspirantes (Coord. Mari)"},
+      {start:"20260804", title:"Convocação Aspirantes (Coord. Mari)"},
+      {start:"20260901", title:"Convocação Aspirantes (Coord. Mari)"},
+      {start:"20261006", title:"Convocação Aspirantes (Coord. Mari)"},
+      {start:"20261103", title:"Convocação Aspirantes (Coord. Mari)"},
+      {start:"20261205", title:"Convocação de Aspirantes (Coord. Mari)"},
+    ]},
+    { id:"cargo-diaconos", title:"Diáconos", desc:"Coord. Cleu", events:[
+      {start:"20260714", title:"Convocação Diáconos (Coord. Cleu)"},
+      {start:"20260811", title:"Convocação Diáconos (Coord. Cleu)"},
+      {start:"20260908", title:"Convocação Diáconos (Coord. Cleu)"},
+      {start:"20261013", title:"Convocação Diáconos (Coord. Cleu)"},
+      {start:"20261110", title:"Convocação Diáconos (Coord. Cleu)"},
+      {start:"20261208", title:"Convocação Diáconos (Coord. Cleu)"},
+    ]},
+    { id:"cargo-governo", title:"Governo", desc:"Coord. Davi / Pai", events:[
+      {start:"20260716", title:"Convocação Governo (Coord. Davi)"},
+      {start:"20260730", title:"Convocação Governo (Coord. Pai)"},
+    ]},
+    { id:"cargo-cooperadores", title:"Cooperadores", desc:"Coord. Davi", events:[
+      {start:"20260721", title:"Convocação Cooperadores (Coord. Davi)"},
+      {start:"20260818", title:"Convocação Cooperadores (Coord. Davi)"},
+      {start:"20260915", title:"Convocação Cooperadores (Coord. Davi)"},
+      {start:"20261020", title:"Convocação Cooperadores (Coord. Davi)"},
+      {start:"20261117", title:"Convocação Cooperadores (Coord. Davi)"},
+      {start:"20261211", title:"Convocação Cooperadores (Coord. Davi)"},
+    ]},
+  ],
+  ministerio: [
+    { id:"ministerio-kids", title:"M. Kids", desc:"Crianças", events:[
+      {start:"20260726", title:"Festival de Sorvete M. Kids (Coord. Cleu)"},
+      {start:"20260802", title:"Espaço Gourmet M. Kids (Coord. Ananda)"},
+      {start:"20260815", title:"Picnic M. Kids (Coord. Gleison)"},
+      {start:"20260822", title:"Treinamento com formadores e assistentes M. Kids (Coord. Loris)"},
+      {start:"20260906", title:"Cinema M. Kids (Coord. Heidiane)"},
+      {start:"20261004", title:"Espaço Gourmet M. Kids (Coord. Silvana)"},
+      {start:"20261017", title:"Celebra Criança (Coord. Loris)"},
+      {start:"20261127", title:"Noite de Pijama M. Kids (Coord. Silvana)"},
+      {start:"20261206", title:"Espaço Gourmet M. Kids (Coord. Loris)"},
+      {start:"20261212", title:"Cantata de Natal M. Kids (Coord. Anna Lissa)"},
+    ]},
+    { id:"ministerio-moviment", title:"M. Moviment", desc:"Coord. Anna", events:[
+      {start:"20260802", title:"Audição M. Moviment (Coord. Anna)"},
+      {start:"20260809", title:"Espaço Gourmet M. Moviment"},
+      {start:"20260821", title:"Vigília M. Moviment (Coord. Anna)"},
+      {start:"20261205", title:"Confraternização M. Moviment (Coord. Adriennys)"},
+    ]},
+    { id:"ministerio-mm", title:"MM", desc:"Ministério da Mulher", events:[
+      {start:"20260822", title:"Comunhão HD e MM (Pais)"},
+      {start:"20260822", title:"Chá com Ap. Virna MM (Coord. Rosa)"},
+      {start:"20260912", title:"Picnic MM (Coord. Roberta)"},
+      {start:"20261010", title:"Etiqueta MM (Coord. Silvana)"},
+      {start:"20261121", title:"Seminário Financeiro MM (Coord. Adriana)"},
+      {start:"20261219", title:"Confraternização MM (Coord. Zilane)"},
+    ]},
+    { id:"ministerio-diaconia", title:"Diaconia", desc:"Discípulos", events:[
+      {start:"20260731", title:"Ceia de Discípulos no Monte (Coord. Diaconia)"},
+      {start:"20260815", title:"Ajuntamento Discípulos (Coord. Igor/Iris)"},
+      {start:"20260828", title:"Ceia de Discípulos (Coord. Diaconia)"},
+      {start:"20260925", title:"Ceia de Discípulos (Coord. Diaconia)"},
+      {start:"20261030", title:"Ceia de Discípulos (Coord. Davi)"},
+      {start:"20261127", title:"Ceia de Discípulos (Coord. Diaconia)"},
+    ]},
+    { id:"ministerio-casais", title:"Casais", desc:"M. a 2 · Coord. Davi/Mari", events:[
+      {start:"20260801", title:"Comunhão M. a 2 (Coord. Davi/Mari)"},
+    ]},
+  ],
+  outros: { title:"Agenda geral", desc:"Ceias do Senhor, missões, jejuns e datas especiais da igreja toda", events:[
+    {start:"20260712", title:"Mutirão Shalom Shalom (Coord. Osvaldo)"},
+    {start:"20260718", title:"Espanha", end:"20260720"},
+    {start:"20260802", title:"Ceia do Senhor"},
+    {start:"20260905", title:"Niver Paizão (Coord. Davi/Mari)"},
+    {start:"20260906", title:"Ceia do Senhor"},
+    {start:"20260912", title:"Dança na Rua (Coord. Cris Sumbo)"},
+    {start:"20260913", title:"Yom Kippur e Jejum de Daniel (Coord. C.O.)"},
+    {start:"20260927", title:"Festa dos Tabernáculos (Coord. Rosa)"},
+    {start:"20261004", title:"Ceia do Senhor"},
+    {start:"20261004", title:"ARCA 57 (Coord. Cleu/Mari)"},
+    {start:"20261101", title:"Ceia do Senhor"},
+    {start:"20261114", title:"Noite de Confecção (Coord. Ivania)"},
+    {start:"20261205", title:"Profetizando 2027 (Coord. 5M)", end:"20261214"},
+    {start:"20261206", title:"Ceia do Senhor"},
+    {start:"20261208", title:"Manancial Social (Coord. Rosa)"},
+    {start:"20261231", title:"Noite de Virada"},
+  ]}
+};
+
+function ticketMarkup({title, kicker, desc, count, id}){
+  return `
+    <div class="top">
+      ${kicker ? `<div class="kicker">${kicker}</div>` : ""}
+      <h3>${title}</h3>
+      <div class="desc">${desc}</div>
+    </div>
+    <div class="perf"></div>
+    <div class="bottom">
+      <div class="count">${count}<small>${count == 1 ? "data" : "datas"}</small></div>
+      <button class="add" data-id="${id}">Adicionar à agenda</button>
+    </div>
+  `;
+}
+
+// Featured ProFive card
+document.getElementById("card-profive").innerHTML = ticketMarkup({
+  title: DATA.profive.title,
+  kicker: DATA.profive.kicker,
+  desc: DATA.profive.desc,
+  count: DATA.profive.events.length,
+  id: "profive"
+});
+
+function renderGrid(containerId, items){
+  const el = document.getElementById(containerId);
+  el.innerHTML = items.map(item => `<div class="ticket">${ticketMarkup({
+    title:item.title, desc:item.desc, count:item.events.length, id:item.id
+  })}</div>`).join("");
+}
+
+renderGrid("grid-cargo", DATA.cargo);
+renderGrid("grid-ministerio", DATA.ministerio);
+
+document.getElementById("grid-outros").innerHTML = `<div class="ticket">${ticketMarkup({
+  title:DATA.outros.title, desc:DATA.outros.desc, count:DATA.outros.events.length, id:"outros"
+})}</div>`;
+
+function findEvents(id){
+  if(id === "profive") return DATA.profive.events;
+  if(id === "outros") return DATA.outros.events;
+  const inCargo = DATA.cargo.find(g => g.id === id);
+  if(inCargo) return inCargo.events;
+  const inMin = DATA.ministerio.find(g => g.id === id);
+  if(inMin) return inMin.events;
+  return [];
+}
+
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest("button.add");
+  if(!btn) return;
+  const id = btn.dataset.id;
+  const events = findEvents(id);
+  const ics = buildICS(id, events);
+  download(id + ".ics", ics);
+  const original = btn.textContent;
+  btn.textContent = "Adicionado ✓";
+  btn.classList.add("done");
+  setTimeout(() => { btn.textContent = original; btn.classList.remove("done"); }, 2200);
+});
+</script>
+</body>
+</html>
