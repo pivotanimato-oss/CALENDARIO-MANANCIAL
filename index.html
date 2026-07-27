@@ -160,6 +160,15 @@
 
   .bottom{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;}
   .add-group{display:flex; gap:8px; flex-wrap:wrap;}
+  .pending{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    color:var(--paper-dim);
+    letter-spacing:0.04em;
+    padding:10px 14px;
+    border:1px dashed rgba(243,239,227,0.28);
+    border-radius:999px;
+  }
   .count{
     font-family:'IBM Plex Mono',monospace;
     font-size:26px;
@@ -337,8 +346,10 @@ const DATA = {
       {start:"20260821", title:"Vigília M. Moviment (Coord. Anna)"},
       {start:"20261205", title:"Confraternização M. Moviment (Coord. Adriennys)"},
     ]},
-    { id:"ministerio-mm", title:"MM", desc:"Ministério da Mulher", events:[
+    { id:"ministerio-hd", title:"HD", desc:"Homens de Deus", events:[
       {start:"20260822", title:"Comunhão HD e MM (Pais)"},
+    ]},
+    { id:"ministerio-mm", title:"MM", desc:"Ministério da Mulher", events:[
       {start:"20260822", title:"Chá com Ap. Virna MM (Coord. Rosa)"},
       {start:"20260912", title:"Picnic MM (Coord. Roberta)"},
       {start:"20261010", title:"Etiqueta MM (Coord. Silvana)"},
@@ -355,6 +366,8 @@ const DATA = {
     ]},
     { id:"ministerio-casais", title:"Casais", desc:"M. a 2 · Coord. Davi/Mari", events:[
       {start:"20260801", title:"Comunhão M. a 2 (Coord. Davi/Mari)"},
+    ]},
+    { id:"ministerio-music", title:"Manancial Music", desc:"Datas em breve", events:[
     ]},
   ],
   outros: { title:"Agenda geral", desc:"Ceias do Senhor, missões, jejuns e datas especiais da igreja toda", events:[
@@ -378,6 +391,12 @@ const DATA = {
 };
 
 function ticketMarkup({title, kicker, desc, count, id}){
+  const controls = count === 0
+    ? `<div class="add-group"><span class="pending">Aguardando data</span></div>`
+    : `<div class="add-group">
+        <button class="add" data-id="${id}" data-action="native">Calendário nativo</button>
+        <button class="add" data-id="${id}" data-action="google">Google Agenda</button>
+      </div>`;
   return `
     <div class="top">
       ${kicker ? `<div class="kicker">${kicker}</div>` : ""}
@@ -387,10 +406,7 @@ function ticketMarkup({title, kicker, desc, count, id}){
     <div class="perf"></div>
     <div class="bottom">
       <div class="count">${count}<small>${count == 1 ? "data" : "datas"}</small></div>
-      <div class="add-group">
-        <button class="add" data-id="${id}" data-action="native">Calendário nativo</button>
-        <button class="add" data-id="${id}" data-action="google">Google Agenda</button>
-      </div>
+      ${controls}
     </div>
   `;
 }
