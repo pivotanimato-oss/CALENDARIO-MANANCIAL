@@ -169,6 +169,46 @@
     border:1px dashed rgba(243,239,227,0.28);
     border-radius:999px;
   }
+  .top{cursor:pointer;}
+
+  .date-list{
+    list-style:none;
+    margin:0;
+    padding:0;
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .28s ease;
+  }
+  .date-list.open{
+    max-height:600px;
+    margin-top:6px;
+  }
+  .date-list li{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    padding:9px 0;
+    border-top:1px solid var(--line);
+    font-size:13px;
+  }
+  .date-list li:first-child{border-top:none;}
+  .li-num{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--gold-soft);
+    flex:0 0 auto;
+  }
+  .li-day{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--paper-dim);
+    flex:0 0 auto;
+    min-width:92px;
+  }
+  .li-name{
+    color:var(--paper);
+    line-height:1.4;
+  }
   .count{
     font-family:'IBM Plex Mono',monospace;
     font-size:26px;
@@ -390,7 +430,19 @@ const DATA = {
   ]}
 };
 
-function ticketMarkup({title, kicker, desc, count, id}){
+const WEEKDAY_PT = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
+
+function formatEventList(events){
+  if(events.length === 0) return "";
+  return events.map((ev, i) => {
+    const y = ev.start.slice(0,4), m = ev.start.slice(4,6), d = ev.start.slice(6,8);
+    const dateObj = new Date(Number(y), Number(m)-1, Number(d));
+    const wd = WEEKDAY_PT[dateObj.getDay()];
+    return `<li><span class="li-num">${String(i+1).padStart(2,"0")}</span><span class="li-day">${d}/${m} · ${wd}</span><span class="li-name">${ev.title}</span></li>`;
+  }).join("");
+}
+
+function ticketMarkup({title, kicker, desc, count, id, events}){
   const controls = count === 0
     ? `<div class="add-group"><span class="pending">Aguardando data</span></div>`
     : `<div class="add-group">
@@ -398,7 +450,7 @@ function ticketMarkup({title, kicker, desc, count, id}){
         <button class="add" data-id="${id}" data-action="google">Google Agenda</button>
       </div>`;
   return `
-    <div class="top">
+    <div class="top" data-toggle="${id}">
       ${kicker ? `<div class="kicker">${kicker}</div>` : ""}
       <h3>${title}</h3>
       <div class="desc">${desc}</div>
@@ -408,13 +460,14 @@ function ticketMarkup({title, kicker, desc, count, id}){
       <div class="count">${count}<small>${count == 1 ? "data" : "datas"}</small></div>
       ${controls}
     </div>
+    ${count > 0 ? `<ul class="date-list" id="dates-${id}">${formatEventList(events)}</ul>` : ""}
   `;
 }
 
 function renderGrid(containerId, items){
   const el = document.getElementById(containerId);
   el.innerHTML = items.map(item => `<div class="ticket">${ticketMarkup({
-    title:item.title, kicker:item.kicker, desc:item.desc, count:item.events.length, id:item.id
+    title:item.title, kicker:item.kicker, desc:item.desc, count:item.events.length, id:item.id, events:item.events
   })}</div>`).join("");
 }
 
@@ -427,11 +480,18 @@ renderGrid("grid-cargo", DATA.cargo);
 renderGrid("grid-ministerio", ministerioItems);
 
 document.getElementById("grid-outros").innerHTML = `<div class="ticket">${ticketMarkup({
-  title:DATA.outros.title, desc:DATA.outros.desc, count:DATA.outros.events.length, id:"outros"
+  title:DATA.outros.title, desc:DATA.outros.desc, count:DATA.outros.events.length, id:"outros", events:DATA.outros.events
 })}</div>`;
 
-
 document.addEventListener("click", (e) => {
+  const toggle = e.target.closest("[data-toggle]");
+  if(toggle){
+    const id = toggle.dataset.toggle;
+    const list = document.getElementById("dates-" + id);
+    if(list) list.classList.toggle("open");
+    return;
+  }
+
   const btn = e.target.closest("button.add");
   if(!btn) return;
   const id = btn.dataset.id;
