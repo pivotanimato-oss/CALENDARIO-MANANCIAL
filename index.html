@@ -175,40 +175,88 @@
     list-style:none;
     margin:0;
     padding:0;
-    max-height:0;
-    overflow:hidden;
-    transition:max-height .28s ease;
-  }
-  .date-list.open{
-    max-height:600px;
-    margin-top:6px;
   }
   .date-list li{
     display:flex;
     align-items:baseline;
-    gap:10px;
-    padding:9px 0;
+    gap:14px;
+    padding:14px 0;
     border-top:1px solid var(--line);
-    font-size:13px;
+    font-size:14.5px;
   }
   .date-list li:first-child{border-top:none;}
   .li-num{
     font-family:'IBM Plex Mono',monospace;
-    font-size:11px;
+    font-size:12px;
     color:var(--gold-soft);
     flex:0 0 auto;
   }
   .li-day{
     font-family:'IBM Plex Mono',monospace;
-    font-size:12px;
+    font-size:13px;
     color:var(--paper-dim);
     flex:0 0 auto;
-    min-width:92px;
+    min-width:110px;
   }
   .li-name{
     color:var(--paper);
     line-height:1.4;
   }
+
+  .overlay{
+    position:fixed;
+    inset:0;
+    background:var(--ink);
+    z-index:1000;
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(12px);
+    transition:opacity .22s ease, transform .22s ease, visibility 0s linear .22s;
+    overflow-y:auto;
+  }
+  .overlay.open{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+    transition:opacity .22s ease, transform .22s ease;
+  }
+  .overlay-back{
+    position:sticky;
+    top:0;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin:24px 0 0 24px;
+    padding:10px 16px 10px 12px;
+    background:var(--ink-2);
+    color:var(--paper);
+    border:none;
+    border-radius:999px;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:13.5px;
+    cursor:pointer;
+    box-shadow:0 6px 18px rgba(0,0,0,0.30);
+  }
+  .overlay-back:hover{background:var(--ink-3);}
+  .overlay-inner{
+    max-width:640px;
+    margin:0 auto;
+    padding:20px 24px 96px;
+  }
+  .overlay-head h2{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:clamp(28px,4vw,38px);
+    margin:8px 0 6px;
+  }
+  .overlay-head .desc{
+    font-size:14.5px;
+    color:var(--paper-dim);
+    margin-bottom:22px;
+  }
+  .overlay-head .add-group{margin-bottom:8px;}
+
   .count{
     font-family:'IBM Plex Mono',monospace;
     font-size:26px;
@@ -278,6 +326,18 @@
   </section>
 
 
+</div>
+
+<div class="overlay" id="overlay">
+  <button class="overlay-back" data-close aria-label="Voltar">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Voltar
+  </button>
+  <div class="overlay-inner">
+    <div id="overlay-body"></div>
+  </div>
 </div>
 
 <script>
@@ -450,7 +510,7 @@ function ticketMarkup({title, kicker, desc, count, id, events}){
         <button class="add" data-id="${id}" data-action="google">Google Agenda</button>
       </div>`;
   return `
-    <div class="top" data-toggle="${id}">
+    <div class="top" data-open="${id}">
       ${kicker ? `<div class="kicker">${kicker}</div>` : ""}
       <h3>${title}</h3>
       <div class="desc">${desc}</div>
@@ -460,7 +520,6 @@ function ticketMarkup({title, kicker, desc, count, id, events}){
       <div class="count">${count}<small>${count == 1 ? "data" : "datas"}</small></div>
       ${controls}
     </div>
-    ${count > 0 ? `<ul class="date-list" id="dates-${id}">${formatEventList(events)}</ul>` : ""}
   `;
 }
 
@@ -483,12 +542,48 @@ document.getElementById("grid-outros").innerHTML = `<div class="ticket">${ticket
   title:DATA.outros.title, desc:DATA.outros.desc, count:DATA.outros.events.length, id:"outros", events:DATA.outros.events
 })}</div>`;
 
+const GROUP_REGISTRY = {};
+[...DATA.cargo, ...ministerioItems, { id:"outros", title:DATA.outros.title, desc:DATA.outros.desc, events:DATA.outros.events }]
+  .forEach(g => { GROUP_REGISTRY[g.id] = g; });
+
+const overlay = document.getElementById("overlay");
+const overlayBody = document.getElementById("overlay-body");
+
+function openOverlay(id){
+  const g = GROUP_REGISTRY[id];
+  if(!g) return;
+  const controls = g.events.length === 0
+    ? `<div class="add-group"><span class="pending">Aguardando data</span></div>`
+    : `<div class="add-group">
+        <button class="add" data-id="${id}" data-action="native">Calendário nativo</button>
+        <button class="add" data-id="${id}" data-action="google">Google Agenda</button>
+      </div>`;
+  overlayBody.innerHTML = `
+    <div class="overlay-head">
+      ${g.kicker ? `<div class="kicker">${g.kicker}</div>` : ""}
+      <h2>${g.title}</h2>
+      <div class="desc">${g.desc}</div>
+      ${controls}
+    </div>
+    <ul class="date-list open">${formatEventList(g.events)}</ul>
+  `;
+  overlay.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeOverlay(){
+  overlay.classList.remove("open");
+  document.body.style.overflow = "";
+}
+
 document.addEventListener("click", (e) => {
-  const toggle = e.target.closest("[data-toggle]");
-  if(toggle){
-    const id = toggle.dataset.toggle;
-    const list = document.getElementById("dates-" + id);
-    if(list) list.classList.toggle("open");
+  const opener = e.target.closest("[data-open]");
+  if(opener){
+    openOverlay(opener.dataset.open);
+    return;
+  }
+  if(e.target.closest("[data-close]")){
+    closeOverlay();
     return;
   }
 
@@ -505,6 +600,10 @@ document.addEventListener("click", (e) => {
   btn.textContent = "Adicionado ✓";
   btn.classList.add("done");
   setTimeout(() => { btn.textContent = original; btn.classList.remove("done"); }, 2200);
+});
+
+document.addEventListener("keydown", (e) => {
+  if(e.key === "Escape") closeOverlay();
 });
 </script>
 </body>
