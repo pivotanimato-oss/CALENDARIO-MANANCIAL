@@ -1,9 +1,9 @@
 BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Athos//Agenda//PT
+PRODID:-//Pro Five//Agenda//PT
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
-X-WR-CALNAME:Athos
+X-WR-CALNAME:Pro Five
 X-WR-TIMEZONE:Europe/Lisbon
 BEGIN:VTIMEZONE
 TZID:Europe/Lisbon
@@ -28,7 +28,7 @@ UID:athos-0-20260822@athos-jovens
 DTSTAMP:20260813T120000Z
 DTSTART;TZID=Europe/Lisbon:20260822T200000
 DTEND;TZID=Europe/Lisbon:20260822T220000
-SUMMARY:Voleibol na Praia + Lua (Athos + M. a 2 — Ananda e Darielson)
+SUMMARY:Voleibol na Praia + Lua (Pro Five + M. a 2 — Ananda e Darielson)
 END:VEVENT
 BEGIN:VEVENT
 UID:athos-1-20260905@athos-jovens
