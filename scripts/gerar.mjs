@@ -131,11 +131,23 @@ export function uidDoEvento(grupoId, evento) {
   return `${grupoId}-${evento.data}-${digito}@${DOMINIO_UID}`;
 }
 
+/** "2000" + 2 -> "2200". Não passa da meia-noite: fica em 23:59. */
+function somarHoras(hhmm, horas) {
+  const total = Number(hhmm.slice(0, 2)) * 60 + Number(hhmm.slice(2, 4)) + horas * 60;
+  if (total >= 24 * 60) return '2359';
+  return String(Math.floor(total / 60)).padStart(2, '0') + String(total % 60).padStart(2, '0');
+}
+
 function blocoEvento(grupoId, evento, carimbo) {
   const linhas = ['BEGIN:VEVENT', `UID:${uidDoEvento(grupoId, evento)}`, `DTSTAMP:${carimbo}`];
 
   if (evento.horaInicio) {
-    const fim = evento.horaFim || evento.horaInicio;
+    // Uma mensagem diz "sábado às 20h" e cala-se sobre a hora de acabar.
+    // Sem hora de fim, o DTEND ficava igual ao DTSTART e o evento entrava
+    // na agenda das pessoas com duração zero — um risco fino que quase não
+    // se vê na vista de semana. Duas horas é o que dura quase tudo neste
+    // calendário (o Pro Five é 20h-22h).
+    const fim = evento.horaFim || somarHoras(evento.horaInicio, 2);
     const diaFim = evento.dataFim || evento.data;
     linhas.push(`DTSTART;TZID=Europe/Lisbon:${evento.data}T${evento.horaInicio}00`);
     linhas.push(`DTEND;TZID=Europe/Lisbon:${diaFim}T${fim}00`);
