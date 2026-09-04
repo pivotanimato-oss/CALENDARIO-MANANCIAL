@@ -198,6 +198,20 @@
     flex:0 0 auto;
     min-width:110px;
   }
+  .li-hora{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    color:var(--gold-soft);
+    flex:0 0 auto;
+    min-width:42px;
+  }
+  .atualizado{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.06em;
+    color:var(--paper-dim);
+    margin:-38px 0 0;
+  }
   .li-name{
     color:var(--paper);
     line-height:1.4;
@@ -302,28 +316,9 @@
   <h1>Toque no seu grupo<br>e <em>leve a agenda</em> pronta.</h1>
   <p class="lede">No iPhone e no Google Agenda, o botão assina o calendário: as datas se atualizam sozinhas sempre que algo mudar por aqui. No Android e no PC/Mac, o "Calendário nativo" importa uma cópia — se uma data mudar depois, é só clicar de novo.</p>
 
-  <section class="group-section">
-    <div class="section-head">
-      <h2>Agenda geral</h2>
-      <span>igreja toda</span>
-    </div>
-    <div class="grid wide" id="grid-outros"></div>
-  </section>
+  <p class="atualizado" id="atualizado"></p>
 
-  <section class="group-section">
-    <div class="section-head">
-      <h2>Convocações</h2>
-    </div>
-    <div class="grid" id="grid-cargo"></div>
-  </section>
-
-  <section class="group-section">
-    <div class="section-head">
-      <h2>Por ministério</h2>
-      <span>programação própria</span>
-    </div>
-    <div class="grid" id="grid-ministerio"></div>
-  </section>
+  <div id="seccoes"></div>
 
 
 </div>
@@ -341,11 +336,16 @@
 </div>
 
 <script>
-// Each group has a static .ics file hosted alongside this page (see /calendars).
-// "Calendário nativo": opens/downloads that file so the device's own calendar
-// app (Apple Calendar, Outlook, Windows Calendar...) picks it up.
-// "Google Agenda": subscribes Google Calendar directly to that same file via
-// the render?cid= trick, so every date lands in Google Calendar in one click.
+// A agenda vive em `dados/agenda.json` e mais lado nenhum. Os .ics saem
+// desse mesmo ficheiro (scripts/gerar.mjs), por isso a página e o
+// calendário que as pessoas assinam nunca mais podem discordar um do
+// outro — que era o que acontecia: havia grupos com 19h-21h no .ics e sem
+// hora nenhuma aqui na página.
+//
+// "Calendário nativo": descarrega/abre o .ics para a app de calendário do
+// aparelho o engolir. É uma CÓPIA — se a data mudar depois, não muda lá.
+// "Google Agenda": assina o mesmo ficheiro (render?cid=), e aí sim o
+// Google relê-o sozinho de tempos a tempos e as mudanças chegam.
 
 function isIOS(){
   return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
@@ -359,13 +359,13 @@ function icsUrl(id){
 function openNative(id){
   const url = icsUrl(id);
   if(isIOS()){
-    // iOS Safari: opening (not downloading) the .ics triggers the native
-    // "Adicionar à Agenda" sheet directly, no file download step.
+    // iOS Safari: ABRIR (não descarregar) o .ics faz aparecer logo a folha
+    // "Adicionar à Agenda", sem passo de download.
     window.location.href = url;
     return;
   }
-  // Android / desktop: browsers block auto-opening the calendar app, so
-  // the file downloads and the person taps it once to add the events.
+  // Android / computador: o browser não deixa abrir a app de calendário
+  // sozinho, portanto o ficheiro descarrega e a pessoa toca nele uma vez.
   const a = document.createElement("a");
   a.href = url; a.download = id + ".ics";
   document.body.appendChild(a); a.click();
@@ -378,183 +378,89 @@ function openGoogle(id){
   window.open(url, "_blank", "noopener");
 }
 
-const DATA = {
-  athos: {
-    title:"Pro Five", kicker:"reunião de jovens", desc:"Todo sábado, 20h (eventos com programação especial às 15h)",
-    events:[
-      {start:"20260822", title:"Voleibol na Praia + Lua (Pro Five + M. a 2 — Ananda e Darielson)", startTime:"2000", endTime:"2200"},
-      {start:"20260905", title:"Vintage (geral)", startTime:"2000", endTime:"2200"},
-      {start:"20260912", title:"Evangelismo + Dança (Anna + Will)", startTime:"1500", endTime:"1700"},
-      {start:"20260919", title:"Louvorzão (Will + Anna + Ananda + Darielson)", startTime:"2000", endTime:"2200"},
-      {start:"20260926", title:"Temperamentos e Personalidades (Will + Mary)", startTime:"2000", endTime:"2200"},
-      {start:"20261002", title:"Arca 57", end:"20261004"},
-      {start:"20261010", title:"Etiqueta (M.M) + Churras (HD)", startTime:"2000", endTime:"2200"},
-      {start:"20261017", title:"Boliche (Darielson + Ananda)", startTime:"2000", endTime:"2200"},
-      {start:"20261031", title:"Hallow-Lúia (Diretoria — Paizão ministro)", startTime:"1500", endTime:"1700"},
-      {start:"20261107", title:"Caça ao Tesouro (Will + Darielson)", startTime:"1500", endTime:"1700"},
-      {start:"20261114", title:"Vigília", startTime:"2000", endTime:"2200"},
-      {start:"20261121", title:"Financeiro (MM) + Churras (HD)", startTime:"2000", endTime:"2200"},
-      {start:"20261128", title:"Pregador da Noite", startTime:"2000", endTime:"2200"},
-      {start:"20261205", title:"Ativando o Empreendedorismo", startTime:"2000", endTime:"2200"},
-      {start:"20261219", title:"Noite de Presentes", startTime:"2000", endTime:"2200"},
-      {start:"20261226", title:"Natal — Live (Will)", startTime:"2000", endTime:"2200"},
-    ]
-  },
-  cargo: [
-    { id:"cargo-aspirantes", title:"Aspirantes", desc:"Coord. Mari", events:[
-      {start:"20260707", title:"Convocação Aspirantes (Coord. Mari)", startTime:"2000", endTime:"2300"},
-      {start:"20260804", title:"Convocação Aspirantes (Coord. Mari)", startTime:"2000", endTime:"2300"},
-      {start:"20260901", title:"Convocação Aspirantes (Coord. Mari)", startTime:"2000", endTime:"2300"},
-      {start:"20261006", title:"Convocação Aspirantes (Coord. Mari)", startTime:"2000", endTime:"2300"},
-      {start:"20261103", title:"Convocação Aspirantes (Coord. Mari)", startTime:"2000", endTime:"2300"},
-      {start:"20261205", title:"Convocação de Aspirantes (Coord. Mari)", startTime:"2000", endTime:"2300"},
-    ]},
-    { id:"cargo-diaconos", title:"Diáconos", desc:"Coord. Cleu", events:[
-      {start:"20260714", title:"Convocação Diáconos (Coord. Cleu)", startTime:"2000", endTime:"2300"},
-      {start:"20260811", title:"Convocação Diáconos (Coord. Cleu)", startTime:"2000", endTime:"2300"},
-      {start:"20260908", title:"Convocação Diáconos (Coord. Cleu)", startTime:"2000", endTime:"2300"},
-      {start:"20261013", title:"Convocação Diáconos (Coord. Cleu)", startTime:"2000", endTime:"2300"},
-      {start:"20261110", title:"Convocação Diáconos (Coord. Cleu)", startTime:"2000", endTime:"2300"},
-      {start:"20261208", title:"Convocação Diáconos (Coord. Cleu)", startTime:"2000", endTime:"2300"},
-    ]},
-    { id:"cargo-governo", title:"Governo", desc:"Coord. Davi / Pai", events:[
-      {start:"20260716", title:"Convocação Governo (Coord. Davi)", startTime:"2000", endTime:"2300"},
-      {start:"20260730", title:"Convocação Governo (Coord. Pai)", startTime:"2000", endTime:"2300"},
-      {start:"20260819", title:"Convocação Governo (Coord. Paizão)", startTime:"2000", endTime:"2300"},
-    ]},
-    { id:"cargo-cooperadores", title:"Cooperadores", desc:"Coord. Davi", events:[
-      {start:"20260721", title:"Convocação Cooperadores (Coord. Davi)", startTime:"2000", endTime:"2300"},
-      {start:"20260818", title:"Convocação Cooperadores (Coord. Davi)", startTime:"2000", endTime:"2300"},
-      {start:"20260915", title:"Convocação Cooperadores (Coord. Davi)", startTime:"2000", endTime:"2300"},
-      {start:"20261020", title:"Convocação Cooperadores (Coord. Davi)", startTime:"2000", endTime:"2300"},
-      {start:"20261117", title:"Convocação Cooperadores (Coord. Davi)", startTime:"2000", endTime:"2300"},
-      {start:"20261211", title:"Convocação Cooperadores (Coord. Davi)", startTime:"2000", endTime:"2300"},
-    ]},
-  ],
-  ministerio: [
-    { id:"ministerio-kids", title:"M. Kids", desc:"Crianças · 13h às 18h", events:[
-      {start:"20260726", title:"Festival de Sorvete M. Kids (Coord. Cleu)", startTime:"1300", endTime:"1800"},
-      {start:"20260802", title:"Espaço Gourmet M. Kids (Coord. Ananda)", startTime:"1300", endTime:"1800"},
-      {start:"20260816", title:"Picnic M. Kids (Coord. Gleison)", startTime:"1300", endTime:"1800"},
-      {start:"20260822", title:"Treinamento com formadores e assistentes M. Kids (Coord. Loris)", startTime:"1300", endTime:"1800"},
-      {start:"20260906", title:"Cinema M. Kids (Coord. Heidiane)", startTime:"1300", endTime:"1800"},
-      {start:"20261004", title:"Espaço Gourmet M. Kids (Coord. Silvana)", startTime:"1300", endTime:"1800"},
-      {start:"20261017", title:"Celebra Criança (Coord. Loris)", startTime:"1300", endTime:"1800"},
-      {start:"20261127", title:"Noite de Pijama M. Kids (Coord. Silvana)", startTime:"1300", endTime:"1800"},
-      {start:"20261206", title:"Espaço Gourmet M. Kids (Coord. Loris)", startTime:"1300", endTime:"1800"},
-      {start:"20261212", title:"Cantata de Natal M. Kids (Coord. Anna Lissa)", startTime:"1300", endTime:"1800"},
-    ]},
-    { id:"ministerio-moviment", title:"M. Moviment", desc:"Coord. Anna", events:[
-      {start:"20260802", title:"Audição M. Moviment (Coord. Anna)", timed:true},
-      {start:"20260809", title:"Espaço Gourmet M. Moviment", timed:true},
-      {start:"20260828", title:"Vigília M. Moviment (Coord. Anna)", timed:true},
-      {start:"20261205", title:"Confraternização M. Moviment (Coord. Adriennys)", timed:true},
-    ]},
-    { id:"ministerio-hd", title:"HD", desc:"Homens de Deus", events:[
-      {start:"20260829", title:"Comunhão HD e MM (Pais)", timed:true},
-    ]},
-    { id:"ministerio-mm", title:"MM", desc:"Ministério da Mulher", events:[
-      {start:"20260822", title:"Chá com Ap. Virna MM (Coord. Rosa)", timed:true},
-      {start:"20260912", title:"Picnic MM (Coord. Roberta)", timed:true},
-      {start:"20261010", title:"Etiqueta MM (Coord. Silvana)", timed:true},
-      {start:"20261121", title:"Seminário Financeiro MM (Coord. Adriana)", timed:true},
-      {start:"20261219", title:"Confraternização MM (Coord. Zilane)", timed:true},
-    ]},
-    { id:"ministerio-diaconia", title:"Diaconia", desc:"Discípulos", events:[
-      {start:"20260731", title:"Ceia de Discípulos no Monte (Coord. Diaconia)", timed:true},
-      {start:"20260815", title:"Ajuntamento Discípulos (Coord. Igor/Iris)", timed:true},
-      {start:"20260821", title:"Ceia de Discípulos (Coord. Diaconia)", timed:true},
-      {start:"20260925", title:"Ceia de Discípulos (Coord. Diaconia)", timed:true},
-      {start:"20261030", title:"Ceia de Discípulos (Coord. Davi)", timed:true},
-      {start:"20261127", title:"Ceia de Discípulos (Coord. Diaconia)", timed:true},
-    ]},
-    { id:"ministerio-casais", title:"Casais", desc:"M. a 2 · Coord. Davi/Mari", events:[
-      {start:"20260822", title:"Comunhão M. a 2 (Coord. Davi/Mari)", timed:true},
-    ]},
-    { id:"ministerio-music", title:"Manancial Music", desc:"Datas em breve", events:[
-    ]},
-  ],
-  outros: { title:"Agenda geral", desc:"Ceias do Senhor, missões, jejuns e datas especiais da igreja toda", events:[
-    {start:"20260712", title:"Mutirão Shalom Shalom (Coord. Osvaldo)"},
-    {start:"20260718", title:"Espanha", end:"20260720"},
-    {start:"20260802", title:"Ceia do Senhor", startTime:"1000", endTime:"1300"},
-    {start:"20260816", title:"Treinamento de Intercessão (Coord. Davi)"},
-    {start:"20260816", title:"Bazar Chick (M. Social)"},
-    {start:"20260830", title:"Café de Integração (Coord. Aprisco)"},
-    {start:"20260902", title:"Treinamento Centro de Oração (Coord. Davi)"},
-    {start:"20260905", title:"Niver Paizão (Coord. Davi/Mari)"},
-    {start:"20260906", title:"Ceia do Senhor", startTime:"1000", endTime:"1300"},
-    {start:"20260912", title:"Dança na Rua (Coord. Cris Sumbo)"},
-    {start:"20260913", title:"Yom Kippur e Jejum de Daniel (Coord. C.O.)"},
-    {start:"20260924", title:"Disk Amor (Coord. Acolher)"},
-    {start:"20260927", title:"Festa dos Tabernáculos (Coord. Rosa)"},
-    {start:"20261004", title:"Ceia do Senhor", startTime:"1000", endTime:"1300"},
-    {start:"20261004", title:"ARCA 57 (Coord. Cleu/Mari)"},
-    {start:"20261101", title:"Ceia do Senhor", startTime:"1000", endTime:"1300"},
-    {start:"20261114", title:"Noite de Confecção (Coord. Ivania)"},
-    {start:"20261205", title:"Profetizando 2027 (Coord. 5M)", end:"20261214"},
-    {start:"20261206", title:"Ceia do Senhor", startTime:"1000", endTime:"1300"},
-    {start:"20261208", title:"Manancial Social (Coord. Rosa)"},
-    {start:"20261211", title:"Disk Amor (Coord. Acolher)"},
-    {start:"20261231", title:"Noite de Virada"},
-  ]}
-};
-
 const WEEKDAY_PT = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
+const GROUP_REGISTRY = {};
 
-function formatEventList(events){
-  if(events.length === 0) return "";
-  return events.map((ev, i) => {
-    const y = ev.start.slice(0,4), m = ev.start.slice(4,6), d = ev.start.slice(6,8);
-    const dateObj = new Date(Number(y), Number(m)-1, Number(d));
-    const wd = WEEKDAY_PT[dateObj.getDay()];
-    return `<li><span class="li-num">${String(i+1).padStart(2,"0")}</span><span class="li-day">${d}/${m} · ${wd}</span><span class="li-name">${ev.title}</span></li>`;
+function escaparHtml(t){
+  return String(t == null ? "" : t)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+}
+
+function porData(a, b){
+  return (a.data + (a.horaInicio || "")).localeCompare(b.data + (b.horaInicio || ""));
+}
+
+/** "2000" -> "20h"; "2030" -> "20h30" */
+function formatarHora(hhmm){
+  if(!hhmm) return "";
+  const h = hhmm.slice(0,2), m = hhmm.slice(2,4);
+  return m === "00" ? h + "h" : h + "h" + m;
+}
+
+function formatEventList(eventos){
+  return [...eventos].sort(porData).map((ev, i) => {
+    const y = ev.data.slice(0,4), m = ev.data.slice(4,6), d = ev.data.slice(6,8);
+    const wd = WEEKDAY_PT[new Date(Number(y), Number(m)-1, Number(d)).getDay()];
+    const hora = formatarHora(ev.horaInicio);
+    return "<li>" +
+      "<span class=\"li-num\">" + String(i+1).padStart(2,"0") + "</span>" +
+      "<span class=\"li-day\">" + d + "/" + m + " · " + wd + "</span>" +
+      "<span class=\"li-hora\">" + hora + "</span>" +
+      "<span class=\"li-name\">" + escaparHtml(ev.titulo) + "</span>" +
+      "</li>";
   }).join("");
 }
 
-function ticketMarkup({title, kicker, desc, count, id, events}){
-  const controls = count === 0
-    ? `<div class="add-group"><span class="pending">Aguardando data</span></div>`
-    : `<div class="add-group">
-        <button class="add" data-id="${id}" data-action="native">Calendário nativo</button>
-        <button class="add" data-id="${id}" data-action="google">Google Agenda</button>
-      </div>`;
-  return `
-    <div class="top" data-open="${id}">
-      ${kicker ? `<div class="kicker">${kicker}</div>` : ""}
-      <h3>${title}</h3>
-      <div class="desc">${desc}</div>
-    </div>
-    <div class="perf"></div>
-    <div class="bottom">
-      <div class="count">${count}<small>${count == 1 ? "data" : "datas"}</small></div>
-      ${controls}
-    </div>
-  `;
+function botoes(id, count){
+  if(count === 0) return "<div class=\"add-group\"><span class=\"pending\">Aguardando data</span></div>";
+  return "<div class=\"add-group\">" +
+      "<button class=\"add\" data-id=\"" + id + "\" data-action=\"native\">Calendário nativo</button>" +
+      "<button class=\"add\" data-id=\"" + id + "\" data-action=\"google\">Google Agenda</button>" +
+    "</div>";
 }
 
-function renderGrid(containerId, items){
-  const el = document.getElementById(containerId);
-  el.innerHTML = items.map(item => `<div class="ticket">${ticketMarkup({
-    title:item.title, kicker:item.kicker, desc:item.desc, count:item.events.length, id:item.id, events:item.events
-  })}</div>`).join("");
+function ticketMarkup(g){
+  const count = g.eventos.length;
+  return "" +
+    "<div class=\"top\" data-open=\"" + g.id + "\">" +
+      (g.kicker ? "<div class=\"kicker\">" + escaparHtml(g.kicker) + "</div>" : "") +
+      "<h3>" + escaparHtml(g.titulo) + "</h3>" +
+      "<div class=\"desc\">" + escaparHtml(g.desc) + "</div>" +
+    "</div>" +
+    "<div class=\"perf\"></div>" +
+    "<div class=\"bottom\">" +
+      "<div class=\"count\">" + count + "<small>" + (count == 1 ? "data" : "datas") + "</small></div>" +
+      botoes(g.id, count) +
+    "</div>";
 }
 
-const ministerioItems = [
-  { id:"athos", title:DATA.athos.title, kicker:DATA.athos.kicker, desc:DATA.athos.desc, events:DATA.athos.events },
-  ...DATA.ministerio
-];
+function render(agenda){
+  const alvo = document.getElementById("seccoes");
+  alvo.innerHTML = agenda.seccoes.map(function(sec){
+    const grupos = agenda.grupos.filter(function(g){ return g.seccao === sec.id; });
+    if(grupos.length === 0) return "";
+    return "<section class=\"group-section\">" +
+        "<div class=\"section-head\">" +
+          "<h2>" + escaparHtml(sec.titulo) + "</h2>" +
+          (sec.nota ? "<span>" + escaparHtml(sec.nota) + "</span>" : "") +
+        "</div>" +
+        "<div class=\"grid" + (sec.largo ? " wide" : "") + "\">" +
+          grupos.map(function(g){ return "<div class=\"ticket\">" + ticketMarkup(g) + "</div>"; }).join("") +
+        "</div>" +
+      "</section>";
+  }).join("");
 
-renderGrid("grid-cargo", DATA.cargo);
-renderGrid("grid-ministerio", ministerioItems);
+  agenda.grupos.forEach(function(g){ GROUP_REGISTRY[g.id] = g; });
 
-document.getElementById("grid-outros").innerHTML = `<div class="ticket">${ticketMarkup({
-  title:DATA.outros.title, desc:DATA.outros.desc, count:DATA.outros.events.length, id:"outros", events:DATA.outros.events
-})}</div>`;
-
-const GROUP_REGISTRY = {};
-[...DATA.cargo, ...ministerioItems, { id:"outros", title:DATA.outros.title, desc:DATA.outros.desc, events:DATA.outros.events }]
-  .forEach(g => { GROUP_REGISTRY[g.id] = g; });
+  if(agenda.atualizadoEm){
+    const d = new Date(agenda.atualizadoEm);
+    if(!isNaN(d)){
+      document.getElementById("atualizado").textContent =
+        "Actualizado a " + d.toLocaleDateString("pt-PT", { day:"numeric", month:"long", year:"numeric" });
+    }
+  }
+}
 
 const overlay = document.getElementById("overlay");
 const overlayBody = document.getElementById("overlay-body");
@@ -562,21 +468,14 @@ const overlayBody = document.getElementById("overlay-body");
 function openOverlay(id){
   const g = GROUP_REGISTRY[id];
   if(!g) return;
-  const controls = g.events.length === 0
-    ? `<div class="add-group"><span class="pending">Aguardando data</span></div>`
-    : `<div class="add-group">
-        <button class="add" data-id="${id}" data-action="native">Calendário nativo</button>
-        <button class="add" data-id="${id}" data-action="google">Google Agenda</button>
-      </div>`;
-  overlayBody.innerHTML = `
-    <div class="overlay-head">
-      ${g.kicker ? `<div class="kicker">${g.kicker}</div>` : ""}
-      <h2>${g.title}</h2>
-      <div class="desc">${g.desc}</div>
-      ${controls}
-    </div>
-    <ul class="date-list open">${formatEventList(g.events)}</ul>
-  `;
+  overlayBody.innerHTML =
+    "<div class=\"overlay-head\">" +
+      (g.kicker ? "<div class=\"kicker\">" + escaparHtml(g.kicker) + "</div>" : "") +
+      "<h2>" + escaparHtml(g.titulo) + "</h2>" +
+      "<div class=\"desc\">" + escaparHtml(g.desc) + "</div>" +
+      botoes(g.id, g.eventos.length) +
+    "</div>" +
+    "<ul class=\"date-list open\">" + formatEventList(g.eventos) + "</ul>";
   overlay.classList.add("open");
   document.body.style.overflow = "hidden";
 }
@@ -586,7 +485,7 @@ function closeOverlay(){
   document.body.style.overflow = "";
 }
 
-document.addEventListener("click", (e) => {
+document.addEventListener("click", function(e){
   const opener = e.target.closest("[data-open]");
   if(opener){
     openOverlay(opener.dataset.open);
@@ -599,22 +498,30 @@ document.addEventListener("click", (e) => {
 
   const btn = e.target.closest("button.add");
   if(!btn) return;
-  const id = btn.dataset.id;
-  const action = btn.dataset.action;
-  if(action === "google"){
-    openGoogle(id);
-  } else {
-    openNative(id);
-  }
+  if(btn.dataset.action === "google") openGoogle(btn.dataset.id);
+  else openNative(btn.dataset.id);
+
   const original = btn.textContent;
   btn.textContent = "Adicionado ✓";
   btn.classList.add("done");
-  setTimeout(() => { btn.textContent = original; btn.classList.remove("done"); }, 2200);
+  setTimeout(function(){ btn.textContent = original; btn.classList.remove("done"); }, 2200);
 });
 
-document.addEventListener("keydown", (e) => {
+document.addEventListener("keydown", function(e){
   if(e.key === "Escape") closeOverlay();
 });
+
+// `cache: "no-cache"` obriga o browser a confirmar com o servidor se o
+// ficheiro mudou. Sem isto, quem já visitou a página podia ficar dias a
+// ver a agenda velha por causa da cache do GitHub Pages.
+fetch("dados/agenda.json", { cache: "no-cache" })
+  .then(function(r){ if(!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+  .then(render)
+  .catch(function(err){
+    document.getElementById("seccoes").innerHTML =
+      "<p class=\"lede\">Não consegui carregar a agenda agora. Actualiza a página daqui a pouco.</p>";
+    console.error("Falha a ler dados/agenda.json:", err);
+  });
 </script>
 </body>
 </html>

@@ -1,0 +1,710 @@
+{
+  "atualizadoEm": "2026-09-04T13:52:30.797Z",
+  "fuso": "Europe/Lisbon",
+  "seccoes": [
+    {
+      "id": "geral",
+      "titulo": "Agenda geral",
+      "nota": "igreja toda",
+      "largo": true
+    },
+    {
+      "id": "cargo",
+      "titulo": "Convocações",
+      "nota": ""
+    },
+    {
+      "id": "ministerio",
+      "titulo": "Por ministério",
+      "nota": "programação própria"
+    }
+  ],
+  "grupos": [
+    {
+      "id": "outros",
+      "seccao": "geral",
+      "titulo": "Agenda geral",
+      "desc": "Ceias do Senhor, missões, jejuns e datas especiais da igreja toda",
+      "nomeCalendario": "Agenda Geral",
+      "eventos": [
+        {
+          "data": "20260712",
+          "titulo": "Mutirão Shalom Shalom (Coord. Osvaldo)",
+          "uid": "outros-0-20260712@profive-jovens"
+        },
+        {
+          "data": "20260718",
+          "titulo": "Espanha",
+          "dataFim": "20260720",
+          "uid": "outros-1-20260718@profive-jovens"
+        },
+        {
+          "data": "20260802",
+          "titulo": "Ceia do Senhor",
+          "horaInicio": "1000",
+          "horaFim": "1300",
+          "uid": "outros-2-20260802@profive-jovens"
+        },
+        {
+          "data": "20260816",
+          "titulo": "Treinamento de Intercessão (Coord. Davi)",
+          "uid": "outros-3-20260816@profive-jovens"
+        },
+        {
+          "data": "20260816",
+          "titulo": "Bazar Chick (M. Social)",
+          "uid": "outros-4-20260816@profive-jovens"
+        },
+        {
+          "data": "20260830",
+          "titulo": "Café de Integração (Coord. Aprisco)",
+          "uid": "outros-5-20260830@profive-jovens"
+        },
+        {
+          "data": "20260902",
+          "titulo": "Treinamento Centro de Oração (Coord. Davi)",
+          "uid": "outros-6-20260902@profive-jovens"
+        },
+        {
+          "data": "20260905",
+          "titulo": "Niver Paizão (Coord. Davi/Mari)",
+          "uid": "outros-7-20260905@profive-jovens"
+        },
+        {
+          "data": "20260906",
+          "titulo": "Ceia do Senhor",
+          "horaInicio": "1000",
+          "horaFim": "1300",
+          "uid": "outros-8-20260906@profive-jovens"
+        },
+        {
+          "data": "20260912",
+          "titulo": "Dança na Rua (Coord. Cris Sumbo)",
+          "uid": "outros-9-20260912@profive-jovens"
+        },
+        {
+          "data": "20260913",
+          "titulo": "Yom Kippur e Jejum de Daniel (Coord. C.O.)",
+          "uid": "outros-10-20260913@profive-jovens"
+        },
+        {
+          "data": "20260924",
+          "titulo": "Disk Amor (Coord. Acolher)",
+          "uid": "outros-11-20260924@profive-jovens"
+        },
+        {
+          "data": "20260927",
+          "titulo": "Festa dos Tabernáculos (Coord. Rosa)",
+          "uid": "outros-12-20260927@profive-jovens"
+        },
+        {
+          "data": "20261004",
+          "titulo": "Ceia do Senhor",
+          "horaInicio": "1000",
+          "horaFim": "1300",
+          "uid": "outros-13-20261004@profive-jovens"
+        },
+        {
+          "data": "20261004",
+          "titulo": "ARCA 57 (Coord. Cleu/Mari)",
+          "uid": "outros-14-20261004@profive-jovens"
+        },
+        {
+          "data": "20261101",
+          "titulo": "Ceia do Senhor",
+          "horaInicio": "1000",
+          "horaFim": "1300",
+          "uid": "outros-15-20261101@profive-jovens"
+        },
+        {
+          "data": "20261114",
+          "titulo": "Noite de Confecção (Coord. Ivania)",
+          "uid": "outros-16-20261114@profive-jovens"
+        },
+        {
+          "data": "20261205",
+          "titulo": "Profetizando 2027 (Coord. 5M)",
+          "dataFim": "20261214",
+          "uid": "outros-17-20261205@profive-jovens"
+        },
+        {
+          "data": "20261206",
+          "titulo": "Ceia do Senhor",
+          "horaInicio": "1000",
+          "horaFim": "1300",
+          "uid": "outros-18-20261206@profive-jovens"
+        },
+        {
+          "data": "20261208",
+          "titulo": "Manancial Social (Coord. Rosa)",
+          "uid": "outros-19-20261208@profive-jovens"
+        },
+        {
+          "data": "20261211",
+          "titulo": "Disk Amor (Coord. Acolher)",
+          "uid": "outros-20-20261211@profive-jovens"
+        },
+        {
+          "data": "20261231",
+          "titulo": "Noite de Virada",
+          "uid": "outros-21-20261231@profive-jovens"
+        }
+      ]
+    },
+    {
+      "id": "cargo-aspirantes",
+      "seccao": "cargo",
+      "titulo": "Aspirantes",
+      "desc": "Coord. Mari",
+      "nomeCalendario": "Aspirantes — Convocações",
+      "eventos": [
+        {
+          "data": "20260707",
+          "titulo": "Convocação Aspirantes (Coord. Mari)",
+          "horaInicio": "2000",
+          "horaFim": "2300",
+          "uid": "cargo-aspirantes-0-20260707@profive-jovens"
+        },
+        {
+          "data": "20260804",
+          "titulo": "Convocação Aspirantes (Coord. Mari)",
+          "horaInicio": "2000",
+          "horaFim": "2300",
+          "uid": "cargo-aspirantes-1-20260804@profive-jovens"
+        },
+        {
+          "data": "20260901",
+          "titulo": "Convocação Aspirantes (Coord. Mari)",
+          "horaInicio": "2000",
+          "horaFim": "2300",
+          "uid": "cargo-aspirantes-2-20260901@profive-jovens"
+        },
+        {
+          "data": "20261006",
+          "titulo": "Convocação Aspirantes (Coord. Mari)",
+          "horaInicio": "2000",
+          "horaFim": "2300",
+          "uid": "cargo-aspirantes-3-20261006@profive-jovens"
+        },
+        {
+          "data": "20261103",
+          "titulo": "Convocação Aspirantes (Coord. Mari)",
+          "horaInicio": "2000",
+          "horaFim": "2300",
+          "uid": "cargo-aspirantes-4-20261103@profive-jovens"
+        },
+        {
+          "data": "20261205",
+          "titulo": "Convocação de Aspirantes (Coord. Mari)",
+          "horaInicio": "2000",
+          "horaFim": "2300",
+          "uid": "cargo-aspirantes-5-20261205@profive-jovens"
+        }
+      ]
+    },
+    {
+      "id": "cargo-diaconos",
+      "seccao": "cargo",
+      "titulo": "Diáconos",
+      "desc": "Coord. Cleu",
+      "nomeCalendario": "Diáconos — Convocações",
+      "eventos": [
+        {
+          "data": "20260714",
+          "titulo": "Convocação Diáconos (Coord. Cleu)",
+          "horaInicio": "2000",
+          "horaFim": "2300",
+          "uid": "cargo-diaconos-0-20260714@profive-jovens"
+        },
+        {
+          "data": "20260811",
+          "titulo": "Convocação Diáconos (Coord. Cleu)",
+          "horaInicio": "2000",
+          "horaFim": "2300",
+          "uid": "cargo-diaconos-1-20260811@profive-jovens"
+        },
+        {
+          "data": "20260908",
+          "titulo": "Convocação Diáconos (Coord. Cleu)",
+          "horaInicio": "2000",
+          "horaFim": "2300",
+          "uid": "cargo-diaconos-2-20260908@profive-jovens"
+        },
+        {
+          "data": "20261013",
+          "titulo": "Convocação Diáconos (Coord. Cleu)",
+          "horaInicio": "2000",
+          "horaFim": "2300",
+          "uid": "cargo-diaconos-3-20261013@profive-jovens"
+        },
+        {
+          "data": "20261110",
+          "titulo": "Convocação Diáconos (Coord. Cleu)",
+          "horaInicio": "2000",
+          "horaFim": "2300",
+          "uid": "cargo-diaconos-4-20261110@profive-jovens"
+        },
+        {
+          "data": "20261208",
+          "titulo": "Convocação Diáconos (Coord. Cleu)",
+          "horaInicio": "2000",
+          "horaFim": "2300",
+          "uid": "cargo-diaconos-5-20261208@profive-jovens"
+        }
+      ]
+    },
+    {
+      "id": "cargo-governo",
+      "seccao": "cargo",
+      "titulo": "Governo",
+      "desc": "Coord. Davi / Pai",
+      "nomeCalendario": "Governo — Convocações",
+      "eventos": [
+        {
+          "data": "20260716",
+          "titulo": "Convocação Governo (Coord. Davi)",
+          "horaInicio": "2000",
+          "horaFim": "2300",
+          "uid": "cargo-governo-0-20260716@profive-jovens"
+        },
+        {
+          "data": "20260730",
+          "titulo": "Convocação Governo (Coord. Pai)",
+          "horaInicio": "2000",
+          "horaFim": "2300",
+          "uid": "cargo-governo-1-20260730@profive-jovens"
+        },
+        {
+          "data": "20260819",
+          "titulo": "Convocação Governo (Coord. Paizão)",
+          "horaInicio": "2000",
+          "horaFim": "2300",
+          "uid": "cargo-governo-2-20260819@profive-jovens"
+        }
+      ]
+    },
+    {
+      "id": "cargo-cooperadores",
+      "seccao": "cargo",
+      "titulo": "Cooperadores",
+      "desc": "Coord. Davi",
+      "nomeCalendario": "Cooperadores — Convocações",
+      "eventos": [
+        {
+          "data": "20260721",
+          "titulo": "Convocação Cooperadores (Coord. Davi)",
+          "horaInicio": "2000",
+          "horaFim": "2300",
+          "uid": "cargo-cooperadores-0-20260721@profive-jovens"
+        },
+        {
+          "data": "20260818",
+          "titulo": "Convocação Cooperadores (Coord. Davi)",
+          "horaInicio": "2000",
+          "horaFim": "2300",
+          "uid": "cargo-cooperadores-1-20260818@profive-jovens"
+        },
+        {
+          "data": "20260915",
+          "titulo": "Convocação Cooperadores (Coord. Davi)",
+          "horaInicio": "2000",
+          "horaFim": "2300",
+          "uid": "cargo-cooperadores-2-20260915@profive-jovens"
+        },
+        {
+          "data": "20261020",
+          "titulo": "Convocação Cooperadores (Coord. Davi)",
+          "horaInicio": "2000",
+          "horaFim": "2300",
+          "uid": "cargo-cooperadores-3-20261020@profive-jovens"
+        },
+        {
+          "data": "20261117",
+          "titulo": "Convocação Cooperadores (Coord. Davi)",
+          "horaInicio": "2000",
+          "horaFim": "2300",
+          "uid": "cargo-cooperadores-4-20261117@profive-jovens"
+        },
+        {
+          "data": "20261211",
+          "titulo": "Convocação Cooperadores (Coord. Davi)",
+          "horaInicio": "2000",
+          "horaFim": "2300",
+          "uid": "cargo-cooperadores-5-20261211@profive-jovens"
+        }
+      ]
+    },
+    {
+      "id": "athos",
+      "seccao": "ministerio",
+      "titulo": "Pro Five",
+      "kicker": "reunião de jovens",
+      "desc": "Todo sábado, 20h (eventos com programação especial às 15h)",
+      "nomeCalendario": "Pro Five",
+      "eventos": [
+        {
+          "data": "20260822",
+          "titulo": "Voleibol na Praia + Lua (Pro Five + M. a 2 — Ananda e Darielson)",
+          "horaInicio": "2000",
+          "horaFim": "2200",
+          "uid": "athos-0-20260822@athos-jovens"
+        },
+        {
+          "data": "20260905",
+          "titulo": "Vintage (geral)",
+          "horaInicio": "2000",
+          "horaFim": "2200",
+          "uid": "athos-1-20260905@athos-jovens"
+        },
+        {
+          "data": "20260912",
+          "titulo": "Evangelismo + Dança (Anna + Will)",
+          "horaInicio": "1500",
+          "horaFim": "1700",
+          "uid": "athos-2-20260912@athos-jovens"
+        },
+        {
+          "data": "20260919",
+          "titulo": "Louvorzão (Will + Anna + Ananda + Darielson)",
+          "horaInicio": "2000",
+          "horaFim": "2200",
+          "uid": "athos-3-20260919@athos-jovens"
+        },
+        {
+          "data": "20260926",
+          "titulo": "Temperamentos e Personalidades (Will + Mary)",
+          "horaInicio": "2000",
+          "horaFim": "2200",
+          "uid": "athos-4-20260926@athos-jovens"
+        },
+        {
+          "data": "20261002",
+          "titulo": "Arca 57",
+          "dataFim": "20261004",
+          "uid": "athos-5-20261002@athos-jovens"
+        },
+        {
+          "data": "20261010",
+          "titulo": "Etiqueta (M.M) + Churras (HD)",
+          "horaInicio": "2000",
+          "horaFim": "2200",
+          "uid": "athos-6-20261010@athos-jovens"
+        },
+        {
+          "data": "20261017",
+          "titulo": "Boliche (Darielson + Ananda)",
+          "horaInicio": "2000",
+          "horaFim": "2200",
+          "uid": "athos-7-20261017@athos-jovens"
+        },
+        {
+          "data": "20261031",
+          "titulo": "Hallow-Lúia (Diretoria — Paizão ministro)",
+          "horaInicio": "1500",
+          "horaFim": "1700",
+          "uid": "athos-8-20261031@athos-jovens"
+        },
+        {
+          "data": "20261107",
+          "titulo": "Caça ao Tesouro (Will + Darielson)",
+          "horaInicio": "1500",
+          "horaFim": "1700",
+          "uid": "athos-9-20261107@athos-jovens"
+        },
+        {
+          "data": "20261114",
+          "titulo": "Vigília",
+          "horaInicio": "2000",
+          "horaFim": "2200",
+          "uid": "athos-10-20261114@athos-jovens"
+        },
+        {
+          "data": "20261121",
+          "titulo": "Financeiro (MM) + Churras (HD)",
+          "horaInicio": "2000",
+          "horaFim": "2200",
+          "uid": "athos-11-20261121@athos-jovens"
+        },
+        {
+          "data": "20261128",
+          "titulo": "Pregador da Noite",
+          "horaInicio": "2000",
+          "horaFim": "2200",
+          "uid": "athos-12-20261128@athos-jovens"
+        },
+        {
+          "data": "20261205",
+          "titulo": "Ativando o Empreendedorismo",
+          "horaInicio": "2000",
+          "horaFim": "2200",
+          "uid": "athos-13-20261205@athos-jovens"
+        },
+        {
+          "data": "20261219",
+          "titulo": "Noite de Presentes",
+          "horaInicio": "2000",
+          "horaFim": "2200",
+          "uid": "athos-14-20261219@athos-jovens"
+        },
+        {
+          "data": "20261226",
+          "titulo": "Natal — Live (Will)",
+          "horaInicio": "2000",
+          "horaFim": "2200",
+          "uid": "athos-15-20261226@athos-jovens"
+        }
+      ]
+    },
+    {
+      "id": "ministerio-kids",
+      "seccao": "ministerio",
+      "titulo": "M. Kids",
+      "desc": "Crianças · 13h às 18h",
+      "nomeCalendario": "M. Kids",
+      "eventos": [
+        {
+          "data": "20260726",
+          "titulo": "Festival de Sorvete M. Kids (Coord. Cleu)",
+          "horaInicio": "1300",
+          "horaFim": "1800",
+          "uid": "ministerio-kids-0-20260726@profive-jovens"
+        },
+        {
+          "data": "20260802",
+          "titulo": "Espaço Gourmet M. Kids (Coord. Ananda)",
+          "horaInicio": "1300",
+          "horaFim": "1800",
+          "uid": "ministerio-kids-1-20260802@profive-jovens"
+        },
+        {
+          "data": "20260816",
+          "titulo": "Picnic M. Kids (Coord. Gleison)",
+          "horaInicio": "1300",
+          "horaFim": "1800",
+          "uid": "ministerio-kids-2-20260816@profive-jovens"
+        },
+        {
+          "data": "20260822",
+          "titulo": "Treinamento com formadores e assistentes M. Kids (Coord. Loris)",
+          "horaInicio": "1300",
+          "horaFim": "1800",
+          "uid": "ministerio-kids-3-20260822@profive-jovens"
+        },
+        {
+          "data": "20260906",
+          "titulo": "Cinema M. Kids (Coord. Heidiane)",
+          "horaInicio": "1300",
+          "horaFim": "1800",
+          "uid": "ministerio-kids-4-20260906@profive-jovens"
+        },
+        {
+          "data": "20261004",
+          "titulo": "Espaço Gourmet M. Kids (Coord. Silvana)",
+          "horaInicio": "1300",
+          "horaFim": "1800",
+          "uid": "ministerio-kids-5-20261004@profive-jovens"
+        },
+        {
+          "data": "20261017",
+          "titulo": "Celebra Criança (Coord. Loris)",
+          "horaInicio": "1300",
+          "horaFim": "1800",
+          "uid": "ministerio-kids-6-20261017@profive-jovens"
+        },
+        {
+          "data": "20261127",
+          "titulo": "Noite de Pijama M. Kids (Coord. Silvana)",
+          "horaInicio": "1300",
+          "horaFim": "1800",
+          "uid": "ministerio-kids-7-20261127@profive-jovens"
+        },
+        {
+          "data": "20261206",
+          "titulo": "Espaço Gourmet M. Kids (Coord. Loris)",
+          "horaInicio": "1300",
+          "horaFim": "1800",
+          "uid": "ministerio-kids-8-20261206@profive-jovens"
+        },
+        {
+          "data": "20261212",
+          "titulo": "Cantata de Natal M. Kids (Coord. Anna Lissa)",
+          "horaInicio": "1300",
+          "horaFim": "1800",
+          "uid": "ministerio-kids-9-20261212@profive-jovens"
+        }
+      ]
+    },
+    {
+      "id": "ministerio-moviment",
+      "seccao": "ministerio",
+      "titulo": "M. Moviment",
+      "desc": "Coord. Anna",
+      "nomeCalendario": "M. Moviment",
+      "eventos": [
+        {
+          "data": "20260802",
+          "titulo": "Audição M. Moviment (Coord. Anna)",
+          "horaInicio": "1900",
+          "horaFim": "2100",
+          "uid": "ministerio-moviment-0-20260802@profive-jovens"
+        },
+        {
+          "data": "20260809",
+          "titulo": "Espaço Gourmet M. Moviment",
+          "horaInicio": "1900",
+          "horaFim": "2100",
+          "uid": "ministerio-moviment-1-20260809@profive-jovens"
+        },
+        {
+          "data": "20260828",
+          "titulo": "Vigília M. Moviment (Coord. Anna)",
+          "horaInicio": "1900",
+          "horaFim": "2100",
+          "uid": "ministerio-moviment-2-20260828@profive-jovens"
+        },
+        {
+          "data": "20261205",
+          "titulo": "Confraternização M. Moviment (Coord. Adriennys)",
+          "horaInicio": "1900",
+          "horaFim": "2100",
+          "uid": "ministerio-moviment-3-20261205@profive-jovens"
+        }
+      ]
+    },
+    {
+      "id": "ministerio-hd",
+      "seccao": "ministerio",
+      "titulo": "HD",
+      "desc": "Homens de Deus",
+      "nomeCalendario": "HD",
+      "eventos": [
+        {
+          "data": "20260829",
+          "titulo": "Comunhão HD e MM (Pais)",
+          "horaInicio": "1900",
+          "horaFim": "2100",
+          "uid": "ministerio-hd-0-20260829@profive-jovens"
+        }
+      ]
+    },
+    {
+      "id": "ministerio-mm",
+      "seccao": "ministerio",
+      "titulo": "MM",
+      "desc": "Ministério da Mulher",
+      "nomeCalendario": "MM",
+      "eventos": [
+        {
+          "data": "20260822",
+          "titulo": "Chá com Ap. Virna MM (Coord. Rosa)",
+          "horaInicio": "1900",
+          "horaFim": "2100",
+          "uid": "ministerio-mm-0-20260822@profive-jovens"
+        },
+        {
+          "data": "20260912",
+          "titulo": "Picnic MM (Coord. Roberta)",
+          "horaInicio": "1900",
+          "horaFim": "2100",
+          "uid": "ministerio-mm-1-20260912@profive-jovens"
+        },
+        {
+          "data": "20261010",
+          "titulo": "Etiqueta MM (Coord. Silvana)",
+          "horaInicio": "1900",
+          "horaFim": "2100",
+          "uid": "ministerio-mm-2-20261010@profive-jovens"
+        },
+        {
+          "data": "20261121",
+          "titulo": "Seminário Financeiro MM (Coord. Adriana)",
+          "horaInicio": "1900",
+          "horaFim": "2100",
+          "uid": "ministerio-mm-3-20261121@profive-jovens"
+        },
+        {
+          "data": "20261219",
+          "titulo": "Confraternização MM (Coord. Zilane)",
+          "horaInicio": "1900",
+          "horaFim": "2100",
+          "uid": "ministerio-mm-4-20261219@profive-jovens"
+        }
+      ]
+    },
+    {
+      "id": "ministerio-diaconia",
+      "seccao": "ministerio",
+      "titulo": "Diaconia",
+      "desc": "Discípulos",
+      "nomeCalendario": "Diaconia",
+      "eventos": [
+        {
+          "data": "20260731",
+          "titulo": "Ceia de Discípulos no Monte (Coord. Diaconia)",
+          "horaInicio": "1900",
+          "horaFim": "2100",
+          "uid": "ministerio-diaconia-0-20260731@profive-jovens"
+        },
+        {
+          "data": "20260815",
+          "titulo": "Ajuntamento Discípulos (Coord. Igor/Iris)",
+          "horaInicio": "1900",
+          "horaFim": "2100",
+          "uid": "ministerio-diaconia-1-20260815@profive-jovens"
+        },
+        {
+          "data": "20260821",
+          "titulo": "Ceia de Discípulos (Coord. Diaconia)",
+          "horaInicio": "1900",
+          "horaFim": "2100",
+          "uid": "ministerio-diaconia-2-20260821@profive-jovens"
+        },
+        {
+          "data": "20260925",
+          "titulo": "Ceia de Discípulos (Coord. Diaconia)",
+          "horaInicio": "1900",
+          "horaFim": "2100",
+          "uid": "ministerio-diaconia-3-20260925@profive-jovens"
+        },
+        {
+          "data": "20261030",
+          "titulo": "Ceia de Discípulos (Coord. Davi)",
+          "horaInicio": "1900",
+          "horaFim": "2100",
+          "uid": "ministerio-diaconia-4-20261030@profive-jovens"
+        },
+        {
+          "data": "20261127",
+          "titulo": "Ceia de Discípulos (Coord. Diaconia)",
+          "horaInicio": "1900",
+          "horaFim": "2100",
+          "uid": "ministerio-diaconia-5-20261127@profive-jovens"
+        }
+      ]
+    },
+    {
+      "id": "ministerio-casais",
+      "seccao": "ministerio",
+      "titulo": "Casais",
+      "desc": "M. a 2 · Coord. Davi/Mari",
+      "nomeCalendario": "Casais",
+      "eventos": [
+        {
+          "data": "20260822",
+          "titulo": "Comunhão M. a 2 (Coord. Davi/Mari)",
+          "horaInicio": "1900",
+          "horaFim": "2100",
+          "uid": "ministerio-casais-0-20260822@profive-jovens"
+        }
+      ]
+    },
+    {
+      "id": "ministerio-music",
+      "seccao": "ministerio",
+      "titulo": "Manancial Music",
+      "desc": "Datas em breve",
+      "nomeCalendario": "Manancial Music",
+      "eventos": []
+    }
+  ]
+}
