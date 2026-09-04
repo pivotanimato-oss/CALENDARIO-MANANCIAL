@@ -1,0 +1,5 @@
+# O iCalendar exige CRLF (RFC 5545). O Git no Windows anda a converter
+# finais de linha sozinho (core.autocrlf=true) e um `add --renormalize`
+# distraido chegava para publicar .ics so com LF. Estes ficheiros sao
+# escritos por scripts/gerar.mjs ja com CRLF -- o Git nao lhes toca.
+*.ics -text
